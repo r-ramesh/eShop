@@ -1,3 +1,5 @@
+using CommunityToolkit.Mvvm.Messaging;
+using eShop.ClientApp.Messages;
 using eShop.ClientApp.Models.Basket;
 using eShop.ClientApp.Services;
 using eShop.ClientApp.Services.AppEnvironment;
@@ -84,6 +86,9 @@ public partial class BasketViewModel : ViewModelBase
         }
 
         ReCalculateTotal();
+        
+        WeakReferenceMessenger.Default
+            .Send(new ProductCountChangedMessage(BadgeCount));
     }
 
     public async Task ClearBasketItems()
@@ -93,6 +98,9 @@ public partial class BasketViewModel : ViewModelBase
         await _appEnvironmentService.BasketService.ClearBasketAsync();
 
         ReCalculateTotal();
+        
+        WeakReferenceMessenger.Default
+            .Send(new ProductCountChangedMessage(BadgeCount));
     }
 
     private void ReCalculateTotal()
