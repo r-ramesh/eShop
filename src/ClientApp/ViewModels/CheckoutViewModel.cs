@@ -111,14 +111,8 @@ public partial class CheckoutViewModel : ViewModelBase
 
             await _appEnvironmentService.OrderService.CreateOrderAsync(Order);
 
-            // Clean Basket
-            await _appEnvironmentService.BasketService.ClearBasketAsync();
-
             // Reset Basket badge
             await _basketViewModel.ClearBasketItems();
-            
-            WeakReferenceMessenger.Default
-                .Send(new ProductCountChangedMessage(0));
 
             // Navigate to Orders
             await NavigationService.NavigateToAsync("//Main/Catalog");
